@@ -18,8 +18,8 @@ from DeepSortWithYolov3.yolov3_tf2.utils import load_darknet_weights
 
 # ADD THE PATH TO THE YOLOV3.WEIGHTS FILE
  # ADD THE SAME PATH WITH YOLOV3.TF WHICH WILL BE DOWNLOADED AUTOMATICALLY IN THE FOLDER WHEN THE CODE WILL RUN
-flags.DEFINE_string('weights', 'D:\PycharmProjects\opencv\DeepSortWithYolov3\weights\yolov3.weights', 'path to weights file')
-flags.DEFINE_string('output', 'D:\PycharmProjects\opencv\DeepSortWithYolov3\weights\yolov3.tf', 'path to output')
+flags.DEFINE_string('weights', '\DeepSortWithYolov3\weights\yolov3.weights', 'path to weights file')
+flags.DEFINE_string('output', '\DeepSortWithYolov3\weights\yolov3.tf', 'path to output')
 flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
 flags.DEFINE_integer('num_classes', 80, 'number of classes in the model')
 
@@ -54,26 +54,26 @@ from DeepSortWithYolov3.tools import generate_detections as gdet
 
 
 # ADD THE PATH TO THE COCO.NAMES FILE
-class_names = [c.strip() for c in open('D:\PycharmProjects\opencv\DeepSortWithYolov3\data\labels\coco.names').readlines()]
+class_names = [c.strip() for c in open('\DeepSortWithYolov3\data\labels\coco.names').readlines()]
 yolo = YoloV3(classes=len(class_names))
 # ADD THE PATH TO THE YOLOV3.TF.INDEX IN WEIGHTS FILE (omit the .index from the name)
-yolo.load_weights('D:\PycharmProjects\opencv\DeepSortWithYolov3\weights\yolov3.tf')
+yolo.load_weights('\DeepSortWithYolov3\weights\yolov3.tf')
 max_cosine_distance = 0.5
 nn_budget = None
 nms_max_overlap = 0.8
 # ADD PATH TO THE MARS-SMALL128.PB FILE FROM MODEL_DATA FOLDER
-model_filename = 'D:\PycharmProjects\opencv\DeepSortWithYolov3\model_data\mars-small128.pb'
+model_filename = '\DeepSortWithYolov3\model_data\mars-small128.pb'
 encoder = gdet.create_box_encoder(model_filename, batch_size=1)
 metric = nn_matching.NearestNeighborDistanceMetric('cosine', max_cosine_distance, nn_budget)
 tracker = Tracker(metric)
 
-vid = cv2.VideoCapture('D:\PycharmProjects\opencv\production ID_3800731.mp4') # ADD THE VIDEO FILE
+vid = cv2.VideoCapture('video.mp4') # ADD THE VIDEO FILE
 # vid = cv2.VideoCapture(0) # FOR CAMERA
 codec = cv2.VideoWriter_fourcc(*'mp4v')
 vid_fps = int(vid.get(cv2.CAP_PROP_FPS))
 vid_width,vid_height = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
 # ADD PATH WHERE YOU WANT TO SAVE THE OUTPUT VIDEO
-out = cv2.VideoWriter('D:\PycharmProjects\opencv\DeepSortWithYolov3\data\video\results.mp4', codec, vid_fps, (vid_width, vid_height))
+out = cv2.VideoWriter('\DeepSortWithYolov3\data\video\results.mp4', codec, vid_fps, (vid_width, vid_height))
 
 from _collections import deque
 pts = [deque(maxlen=30) for _ in range(1000)]
